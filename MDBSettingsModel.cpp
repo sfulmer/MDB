@@ -2,7 +2,7 @@
 
 using namespace net::draconia::mdb::model;
 
-QList<QUrl> &MDBSettingsModel::getBaseURLsInternal() const
+QList<BaseURL> &MDBSettingsModel::getBaseURLsInternal() const
 {
     return(const_cast<MDBSettingsModel &>(*this).mLstBaseURLs);
 }
@@ -11,20 +11,16 @@ MDBSettingsModel::MDBSettingsModel()
     :   Observable()
 { }
 
+MDBSettingsModel::MDBSettingsModel(QList<BaseURL> &lstURLs)
+    :   Observable()
+    ,   mLstBaseURLs(lstURLs)
+{ }
+
 MDBSettingsModel::MDBSettingsModel(const MDBSettingsModel &refCopy)
-    :   Observable()
-    ,   mLstBaseURLs(refCopy.getBaseURLs())
+    :   MDBSettingsModel(const_cast<QList<BaseURL> &>(refCopy.getBaseURLs()))
 { }
 
-MDBSettingsModel::MDBSettingsModel(MDBSettingsModel &refMove)
-    :   Observable()
-    ,   mLstBaseURLs(refMove.getBaseURLs())
-{ }
-
-MDBSettingsModel::~MDBSettingsModel()
-{ }
-
-void MDBSettingsModel::addBaseURL(const QUrl &urlBase)
+void MDBSettingsModel::addBaseURL(const BaseURL &urlBase)
 {
     getBaseURLsInternal().append(urlBase);
 
@@ -32,7 +28,7 @@ void MDBSettingsModel::addBaseURL(const QUrl &urlBase)
     notifyObservers("BaseURLs");
 }
 
-void MDBSettingsModel::addBaseURLs(const QList<QUrl> &lstBaseURLs)
+void MDBSettingsModel::addBaseURLs(const QList<BaseURL> &lstBaseURLs)
 {
     getBaseURLsInternal().append(lstBaseURLs);
 
@@ -48,12 +44,12 @@ void MDBSettingsModel::clearBaseURLs()
     notifyObservers("BaseURLs");
 }
 
-const QList<QUrl> &MDBSettingsModel::getBaseURLs() const
+const QList<BaseURL> &MDBSettingsModel::getBaseURLs() const
 {
     return(getBaseURLsInternal());
 }
 
-void MDBSettingsModel::removeBaseURL(const QUrl &urlBase)
+void MDBSettingsModel::removeBaseURL(const BaseURL &urlBase)
 {
     getBaseURLsInternal().removeOne(urlBase);
 
@@ -61,16 +57,30 @@ void MDBSettingsModel::removeBaseURL(const QUrl &urlBase)
     notifyObservers("BaseURLs");
 }
 
-void MDBSettingsModel::removeBaseURLs(const QList<QUrl> &lstBaseURLs)
+void MDBSettingsModel::removeBaseURL(const QUrl &urlBase)
 {
-    for(const QUrl &url : lstBaseURLs)
+    for(BaseURL &url : getBaseURLsInternal())
+        if(url.getURL() == urlBase)
+            {
+            getBaseURLsInternal().removeOne(url);
+
+            setChanged();
+            notifyObservers("BaseURLs");
+
+            break;
+            }
+}
+
+void MDBSettingsModel::removeBaseURLs(const QList<BaseURL> &lstBaseURLs)
+{
+    for(const BaseURL &url : lstBaseURLs)
         getBaseURLsInternal().removeOne(url);
 
     setChanged();
     notifyObservers("BaseURLs");
 }
 
-void MDBSettingsModel::setBaseURLs(const QList<QUrl> &lstBaseURLs)
+void MDBSettingsModel::setBaseURLs(const QList<BaseURL> &lstBaseURLs)
 {
     mLstBaseURLs = lstBaseURLs;
 

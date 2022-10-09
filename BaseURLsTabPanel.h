@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MDBController.h"
+#include <QSplitter>
 #include <QWidget>
 
 using net::draconia::mdb::MDBController;
@@ -13,20 +14,22 @@ namespace net
         {
             namespace ui
             {
-                class MDBMainPanel : public QWidget
+                class BaseURLsTabPanel : public QWidget
                 {
                     Q_OBJECT
+
                     const MDBController &mRefController;
+                    QSplitter *mSplitter;
                 protected:
                     const MDBController &getController() const;
+                    QSplitter *getSplitter();
                     void initControls();
                     void initPanel();
                 public:
-                    explicit MDBMainPanel(QWidget *parent);
-                    MDBMainPanel(QWidget *parent, const MDBController &refController);
+                    explicit BaseURLsTabPanel(QWidget *parent = nullptr);
+                    BaseURLsTabPanel(QWidget *parent, const MDBController &refController);
                 };
             }
         }
     }
 }
-

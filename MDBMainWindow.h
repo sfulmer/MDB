@@ -1,6 +1,10 @@
 #pragma once
 
+#include "MDBController.h"
+#include "MDBMainPanel.h"
 #include <QMainWindow>
+
+using net::draconia::mdb::MDBController;
 
 namespace net
 {
@@ -14,14 +18,17 @@ namespace net
                 {
                     Q_OBJECT
 
+                    const MDBController &mRefController;
                     MDBMainPanel *mPnlMain;
                 protected:
+                    const MDBController &getController() const;
+                    MDBMainPanel *getMainPanel();
                     void initControls();
                     void initMenus();
                     void initWindow();
                 public:
-                    MDBMainWindow(QWidget *parent = nullptr);
-                    ~MDBMainWindow();
+                    explicit MDBMainWindow(QWidget *parent = nullptr);
+                    MDBMainWindow(QWidget *parent, const MDBController &refController);
                 };
             }
         }

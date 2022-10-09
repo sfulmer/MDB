@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Observable.h"
+#include "BaseURL.h"
 #include <QList>
 #include <QUrl>
 
+using net::draconia::mdb::model::BaseURL;
 using net::draconia::util::Observable;
 
 namespace net
@@ -16,22 +17,22 @@ namespace net
             {
                 class MDBSettingsModel : public Observable
                 {
-                    QList<QUrl> mLstBaseURLs;
+                    QList<BaseURL> mLstBaseURLs;
                 protected:
-                    QList<QUrl> &getBaseURLsInternal() const;
+                    QList<BaseURL> &getBaseURLsInternal() const;
                 public:
                     MDBSettingsModel();
+                    MDBSettingsModel(QList<BaseURL> &lstURLs);
                     MDBSettingsModel(const MDBSettingsModel &refCopy);
-                    MDBSettingsModel(MDBSettingsModel &refMove);
-                    ~MDBSettingsModel();
 
-                    void addBaseURL(const QUrl &urlBase);
-                    void addBaseURLs(const QList<QUrl> &lstBaseURLs);
+                    void addBaseURL(const BaseURL &urlBase);
+                    void addBaseURLs(const QList<BaseURL> &lstBaseURLs);
                     void clearBaseURLs();
-                    const QList<QUrl> &getBaseURLs() const;
+                    const QList<BaseURL> &getBaseURLs() const;
+                    void removeBaseURL(const BaseURL &urlBase);
                     void removeBaseURL(const QUrl &urlBase);
-                    void removeBaseURLs(const QList<QUrl> &lstBaseURLs);
-                    void setBaseURLs(const QList<QUrl> &lstBaseURLs);
+                    void removeBaseURLs(const QList<BaseURL> &lstBaseURLs);
+                    void setBaseURLs(const QList<BaseURL> &lstBaseURLs);
                 };
             }
         }

@@ -35,8 +35,8 @@ void MDBApp::showMainWindow()
     getMainWindow().show();
 }
 
-MDBApp::MDBApp(const int argc, const char **argv)
-    :   QApplication(const_cast<int>(argc), argv)
+MDBApp::MDBApp(int &argc, const char **argv)
+    :   QApplication(argc, const_cast<char **>(argv))
     ,   mPtrController(nullptr)
 {
     setCmdLineArgs(argc, argv);

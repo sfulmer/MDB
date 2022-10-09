@@ -22,10 +22,6 @@ MDBController::MDBController(const MDBController &refCopy)
     :   MDBController(&(refCopy.getApp()))
 { }
 
-MDBController::MDBController(MDBController &refMove)
-    :   MDBController(&(refMove.getApp()))
-{ }
-
 MDBController::~MDBController()
 {
     if(mPtrApp != nullptr)

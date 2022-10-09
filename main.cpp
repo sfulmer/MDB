@@ -1,12 +1,10 @@
-#include "MDBMainWindow.h"
-
 #include "MDBApp.h"
 
 using net::draconia::mdb::MDBApp;
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-    MDBApp app(argc, argv);
+    MDBApp a(argc, const_cast<const char **>(argv));
 
-    return(app.exec());
+    return(a.exec());
 }

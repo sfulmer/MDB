@@ -27,7 +27,6 @@ namespace net
             public:
                 MDBController(const MDBApp *ptrApp);
                 MDBController(const MDBController &refCopy);
-                MDBController(MDBController &refMove);
                 ~MDBController();
 
                 MDBApp &getApp() const;

@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QList>
 
+using net::draconia::mdb::ui::MDBMainWindow;
+
 namespace net
 {
     namespace draconia
@@ -13,6 +15,7 @@ namespace net
         {
             class MDBApp : public QApplication
             {
+                MDBController *mPtrController;
                 MDBMainWindow mWndMain;
                 QList<QString> mLstArgs;
             protected:
@@ -22,10 +25,11 @@ namespace net
                 void setCmdLineArgs(const QList<QString> &args);
                 void showMainWindow();
             public:
-                MDBApp(const int argc, const char **argv);
+                MDBApp(int &argc, const char **argv);
                 ~MDBApp();
 
                 int exec();
+                MDBController &getController();
                 MDBMainWindow &getMainWindow() const;
             };
         }
